@@ -23,6 +23,17 @@ section {
     padding: 48px;
     border-radius: 30px;
     background-color: rgba(240, 248, 255, 0.13);
+
+    .form-buttons {
+        display: flex;
+        justify-content: end;
+        gap: 16px;
+        margin-top: 24px;
+
+        button {
+            width: 88px;
+        }
+    }
 }
 
 .form-field {

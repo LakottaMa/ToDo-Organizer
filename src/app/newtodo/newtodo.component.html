@@ -1,19 +1,16 @@
 <main>
     <section>
         <form class="form">
-            <!-- <div class="field-pair"> -->
-                <mat-form-field class="form-field" appearance="outline">
-                    <mat-label>next todo</mat-label>
-                    <input matInput placeholder="your todo">
-                </mat-form-field>
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>next todo</mat-label>
+                <input matInput placeholder="your todo">
+            </mat-form-field>
 
-                <mat-form-field class="form-field" appearance="outline">
-                    <mat-label>description</mat-label>
-                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                        cdkAutosizeMaxRows="15" placeholder="describe your todo"></textarea>
-                </mat-form-field>
-            <!-- </div> -->
-
+            <mat-form-field class="form-field" appearance="outline">
+                <mat-label>description</mat-label>
+                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                    cdkAutosizeMaxRows="15" placeholder="describe your todo"></textarea>
+            </mat-form-field>
             <div class="field-pair">
                 <mat-form-field class="form-field-pair" appearance="outline">
                     <mat-label>due date</mat-label>
@@ -23,18 +20,17 @@
                 </mat-form-field>
                 <mat-form-field class="form-field-pair" appearance="outline">
                     <mat-label>priority</mat-label>
-                    <mat-select>
+                    <mat-select #prioritySelect>
                         <mat-option value="low">low</mat-option>
                         <mat-option value="medium">medium</mat-option>
                         <mat-option value="high">high</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-
             <div class="field-pair">
                 <mat-form-field class="form-field-pair" appearance="outline">
                     <mat-label>category</mat-label>
-                    <mat-select>
+                    <mat-select #categorySelect>
                         <mat-option value="private">private</mat-option>
                         <mat-option value="study">study</mat-option>
                         <mat-option value="work">work</mat-option>
@@ -42,14 +38,17 @@
                 </mat-form-field>
                 <mat-form-field class="form-field-pair" appearance="outline">
                     <mat-label>status</mat-label>
-                    <mat-select>
+                    <mat-select #statusSelect>
                         <mat-option value="pending">pending</mat-option>
                         <mat-option value="in progress">in progress</mat-option>
                         <mat-option value="done">done</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
-            <button type="submit" mat-raised-button color="primary">Add</button>
+            <div class="form-buttons">
+                <button type="reset" mat-raised-button color="primary" (click)="prioritySelect.value = null; categorySelect.value = null; statusSelect.value = null;">Clear</button>
+                <button type="submit" mat-raised-button color="primary">Add</button>
+            </div>
         </form>
     </section>
 </main>
