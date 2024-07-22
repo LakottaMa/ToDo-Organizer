@@ -1,21 +1,52 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
+import { TodoService } from '../shared/services/todo.service';
+import { Todo } from '../shared/models/todo';
 
 @Component({
   selector: 'app-newtodo',
   standalone: true,
-  imports: [CommonModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatButtonModule, MatInputModule, MatFormFieldModule, FormsModule, TextFieldModule],
+  imports: [
+    CommonModule, MatIconModule, MatDatepickerModule, MatNativeDateModule, MatSelectModule, MatButtonModule,
+    MatInputModule, MatFormFieldModule, FormsModule, ReactiveFormsModule, TextFieldModule
+  ],
   templateUrl: './newtodo.component.html',
-  styleUrl: './newtodo.component.scss',
+  styleUrls: ['./newtodo.component.scss'],
 })
 export class NewtodoComponent {
+  todoService = inject(TodoService);
+  fb = inject(FormBuilder);
+  todoForm: FormGroup;
+
+  constructor() {
+    this.todoForm = this.fb.group({
+      title: [''],
+      description: [''],
+      dueDate: [null || new Date()],
+      priority: ['low'],
+      category: ['private'],
+      status: ['pending'],
+    });
+  }
+
+  onSubmit() {
+    if (this.todoForm.valid) {
+      const newTodo: Todo = this.todoForm.value;
+      this.todoService.addTodo(newTodo);
+  }
+  this.onReset();
+}
+
+  onReset() {
+    this.todoForm.reset();
+  }
 }
