@@ -1,5 +1,7 @@
 <main>
     <section>
+        @if (!todoService.isLoading()) {
         <app-todolist></app-todolist>
+        }
     </section>
 </main>

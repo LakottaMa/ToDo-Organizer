@@ -23,6 +23,7 @@ import { Todo } from '../shared/models/todo';
   templateUrl: './newtodo.component.html',
   styleUrls: ['./newtodo.component.scss'],
 })
+
 export class NewtodoComponent {
   todoService = inject(TodoService);
   sidenavService = inject(SidenavService);
@@ -44,10 +45,12 @@ export class NewtodoComponent {
     if (this.todoForm.valid) {
       const newTodo: Todo = this.todoForm.value;
       this.todoService.addTodo(newTodo);
+    }
+    this.onReset();
+    if (this.todoService.setLoading()) {
+      this.sidenavService.setActiveComponent('dashboard');
+    }
   }
-  this.onReset();
-  this.sidenavService.setActiveComponent('dashboard');
-}
 
   onReset() {
     this.todoForm.reset();

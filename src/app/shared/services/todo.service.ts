@@ -4,8 +4,10 @@ import { Todo } from '../models/todo';
 @Injectable({
   providedIn: 'root'
 })
+
 export class TodoService {
   private nextId = 1;
+  readonly isLoading = signal(false);
   todos = signal<Todo[]>([]);
 
   private generateId(): number {
@@ -14,6 +16,14 @@ export class TodoService {
       id = this.nextId++;
     }
     return id;
+  }
+
+  setLoading() {
+    this.isLoading.set(true);
+    setTimeout(() => {
+      this.isLoading.set(false);
+    }, 1000);
+    return this.isLoading;
   }
 
   addTodo(todo: Todo) {
