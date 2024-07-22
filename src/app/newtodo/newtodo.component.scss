@@ -15,12 +15,14 @@ section {
     background-color: rgba(240, 248, 255, 0.13);
 }
 
-
 .form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
+    margin: 48px;
     padding: 48px;
+    border-radius: 30px;
+    background-color: rgba(240, 248, 255, 0.13);
 }
 
 .form-field {
@@ -29,4 +31,14 @@ section {
     textarea {
         white-space: pre-wrap;
     }
+}
+
+.form-field-pair {
+    width: calc(50% - 8px);
+}
+
+.field-pair {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
 }

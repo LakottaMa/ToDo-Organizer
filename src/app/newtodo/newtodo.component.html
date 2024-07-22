@@ -1,52 +1,55 @@
 <main>
     <section>
         <form class="form">
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>next todo</mat-label>
-                <input matInput placeholder="your todo">
-            </mat-form-field>
+            <!-- <div class="field-pair"> -->
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>next todo</mat-label>
+                    <input matInput placeholder="your todo">
+                </mat-form-field>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>description</mat-label>
-                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="15" placeholder="describe your todo"></textarea>
-            </mat-form-field>
+                <mat-form-field class="form-field" appearance="outline">
+                    <mat-label>description</mat-label>
+                    <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="15" placeholder="describe your todo"></textarea>
+                </mat-form-field>
+            <!-- </div> -->
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>due date</mat-label>
-                <input type="datetime" matInput [matDatepicker]="picker">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+            <div class="field-pair">
+                <mat-form-field class="form-field-pair" appearance="outline">
+                    <mat-label>due date</mat-label>
+                    <input type="datetime" matInput [matDatepicker]="picker">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="form-field-pair" appearance="outline">
+                    <mat-label>priority</mat-label>
+                    <mat-select>
+                        <mat-option value="low">low</mat-option>
+                        <mat-option value="medium">medium</mat-option>
+                        <mat-option value="high">high</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
 
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>priority</mat-label>
-                <mat-select>
-                    <mat-option value="low">low</mat-option>
-                    <mat-option value="medium">medium</mat-option>
-                    <mat-option value="high">high</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>category</mat-label>
-                <mat-select>
-                    <mat-option value="private">private</mat-option>
-                    <mat-option value="study">study</mat-option>
-                    <mat-option value="work">work</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <mat-form-field class="form-field" appearance="outline">
-                <mat-label>status</mat-label>
-                <mat-select>
-                    <mat-option value="pending">pending</mat-option>
-                    <mat-option value="in progress">in progress</mat-option>
-                    <mat-option value="done">done</mat-option>
-                </mat-select>
-            </mat-form-field>
-
-            <button mat-raised-button color="primary">Add</button>
+            <div class="field-pair">
+                <mat-form-field class="form-field-pair" appearance="outline">
+                    <mat-label>category</mat-label>
+                    <mat-select>
+                        <mat-option value="private">private</mat-option>
+                        <mat-option value="study">study</mat-option>
+                        <mat-option value="work">work</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field class="form-field-pair" appearance="outline">
+                    <mat-label>status</mat-label>
+                    <mat-select>
+                        <mat-option value="pending">pending</mat-option>
+                        <mat-option value="in progress">in progress</mat-option>
+                        <mat-option value="done">done</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button type="submit" mat-raised-button color="primary">Add</button>
         </form>
     </section>
 </main>
