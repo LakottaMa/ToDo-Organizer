@@ -10,6 +10,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TodoService } from '../shared/services/todo.service';
+import { SidenavService } from '../shared/services/sidenavservice.service';
 import { Todo } from '../shared/models/todo';
 
 @Component({
@@ -24,6 +25,7 @@ import { Todo } from '../shared/models/todo';
 })
 export class NewtodoComponent {
   todoService = inject(TodoService);
+  sidenavService = inject(SidenavService);
   fb = inject(FormBuilder);
   todoForm: FormGroup;
 
@@ -44,6 +46,7 @@ export class NewtodoComponent {
       this.todoService.addTodo(newTodo);
   }
   this.onReset();
+  this.sidenavService.setActiveComponent('dashboard');
 }
 
   onReset() {
