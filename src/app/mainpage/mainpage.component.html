@@ -1,0 +1,16 @@
+<main>
+    <app-header></app-header>
+    <mat-sidenav-container>
+        <mat-sidenav mode="side" [opened]="sidenavService.isSidenavOpen()">
+            <app-sidenav></app-sidenav>
+        </mat-sidenav>
+        <mat-sidenav-content>
+            @if (sidenavService.activeComponent() == 'dashboard') {
+            <app-dashboard></app-dashboard>
+            }
+            @if (sidenavService.activeComponent() == 'newtodo') {
+            <app-newtodo></app-newtodo>
+            }
+        </mat-sidenav-content>
+    </mat-sidenav-container>
+</main>

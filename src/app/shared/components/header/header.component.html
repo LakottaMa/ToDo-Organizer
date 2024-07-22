@@ -1,0 +1,8 @@
+<mat-toolbar>
+    <section>
+    <button mat-icon-button (click)="sidenavService.toggleSidenav()" *ngIf="!sidenavService.isSidenavOpen()">
+        <mat-icon>menu</mat-icon>
+    </button>
+    <span>ToDo Organizer</span>
+    </section>
+</mat-toolbar>
