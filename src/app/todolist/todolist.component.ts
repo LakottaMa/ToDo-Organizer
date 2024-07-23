@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy, computed } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy, TrackByFunction } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../shared/services/todo.service';
 import { SidenavService } from '../shared/services/sidenavservice.service';
@@ -25,6 +25,7 @@ import { Todo } from '../shared/models/todo';
 
 export class TodolistComponent {
   todoService = inject(TodoService);
+  sidenavService = inject(SidenavService);
   fb = inject(FormBuilder);
   todos = this.todoService.getTodos();
   editForms: { [id: number]: FormGroup } = {};
@@ -45,6 +46,7 @@ export class TodolistComponent {
   onUpdate(todo: Todo) {
     const updatedTodo: Todo = { ...todo, ...this.editForms[todo.id!].value };
     this.todoService.updateTodo(updatedTodo);
+    this.sidenavService.setActiveComponent(updatedTodo.category);
   }
 
   onDelete(todo: Todo) {

@@ -1,7 +1,8 @@
 <main>
     <section>
         <mat-accordion>
-            <mat-expansion-panel *ngFor="let todo of todoService.filteredTodos(); let i = index">
+            @for (todo of todoService.filteredTodos(); track todo.id) {
+            <mat-expansion-panel>
                 <mat-expansion-panel-header>
                     <mat-panel-title>{{ todo.title }}</mat-panel-title>
                 </mat-expansion-panel-header>
@@ -54,6 +55,9 @@
                     </div>
                 </form>
             </mat-expansion-panel>
+        } @empty {
+            <p>No todos found.</p>
+          }
         </mat-accordion>
     </section>
 </main>
