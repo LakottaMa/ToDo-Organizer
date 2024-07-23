@@ -10,7 +10,19 @@
                 <span>Dashboard</span>
             </mat-list-item>
             <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('newtodo')" [ngClass]="{'active': sidenavService.activeComponent() == 'newtodo'}">
-                <span> New ToDo</span>
+                <span>New ToDo</span>
+            </mat-list-item>
+        </mat-list>
+        <mat-divider></mat-divider>
+        <mat-list>
+            <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('Private')" [ngClass]="{'active': sidenavService.activeComponent() == 'Private'}">
+                <span>Private</span>
+            </mat-list-item>
+            <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('Study')" [ngClass]="{'active': sidenavService.activeComponent() == 'Study'}">
+                <span>Study</span>
+            </mat-list-item>
+            <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('Work')" [ngClass]="{'active': sidenavService.activeComponent() == 'Work'}">
+                <span>Work</span>
             </mat-list-item>
         </mat-list>
     </section>

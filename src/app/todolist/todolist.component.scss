@@ -84,21 +84,21 @@ mat-expansion-panel:nth-child(even) {
 @keyframes fadeInLeft {
     0% {
         opacity: 0;
-        transform: translateX(-1000px);
+        transform: translateY(-100px);
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
 
 @keyframes fadeInRight {
     0% {
         opacity: 0;
-        transform: translateX(1000px); /* Von rechts */
+        transform: translateY(100px);
     }
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translateY(0);
     }
 }
