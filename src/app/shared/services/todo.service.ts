@@ -1,11 +1,13 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject, computed } from '@angular/core';
 import { Todo } from '../models/todo';
+import { SidenavService } from '../services/sidenavservice.service';
 
 @Injectable({
   providedIn: 'root'
 })
 
 export class TodoService {
+  sidenavService = inject(SidenavService);
   private nextId = 1;
   readonly isLoading = signal(false);
   todos = signal<Todo[]>([]);
@@ -68,4 +70,18 @@ export class TodoService {
   deleteTodo(id: number) {
     this.todos.update(todos => todos.filter(todo => todo.id !== id));
   }
+
+  /**
+   * Filters the list of todos based on the active category.
+   * @return {Signal<Todo[]>} The filtered list of todos.
+   */
+  filteredTodos = computed(() => {
+    const activeCategory = this.sidenavService.activeComponent();
+    const allTodos = this.todos();
+    if (activeCategory === null || activeCategory === 'dashboard') {
+      return allTodos;
+    } else {
+      return allTodos.filter(todo => todo.category === activeCategory);
+    }
+  });
 }

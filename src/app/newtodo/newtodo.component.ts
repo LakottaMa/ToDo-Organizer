@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -42,13 +42,13 @@ export class NewtodoComponent {
   }
 
   onSubmit() {
+    const newTodo: Todo = this.todoForm.value;
     if (this.todoForm.valid) {
-      const newTodo: Todo = this.todoForm.value;
       this.todoService.addTodo(newTodo);
     }
     this.onReset();
     if (this.todoService.setLoading()) {
-      this.sidenavService.setActiveComponent('dashboard');
+      this.sidenavService.setActiveComponent(newTodo.category);
     }
   }
 

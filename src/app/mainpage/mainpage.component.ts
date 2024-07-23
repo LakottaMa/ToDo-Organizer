@@ -8,11 +8,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SidenavService } from '../shared/services/sidenavservice.service';
 import { NewtodoComponent } from '../newtodo/newtodo.component';
+import { PrivatetodoComponent } from '../privatetodo/privatetodo.component';
+import { StudytodoComponent } from '../studytodo/studytodo.component';
+import { WorktodoComponent } from '../worktodo/worktodo.component';
 
 @Component({
   selector: 'app-mainpage',
   standalone: true,
-  imports: [HeaderComponent, SidenavComponent, DashboardComponent, CommonModule, MatSidenavModule, MatIconModule, MatButtonModule, NewtodoComponent],
+  imports: [HeaderComponent, SidenavComponent, DashboardComponent, PrivatetodoComponent, StudytodoComponent, WorktodoComponent, CommonModule, MatSidenavModule, MatIconModule, MatButtonModule, NewtodoComponent],
   templateUrl: './mainpage.component.html',
   styleUrl: './mainpage.component.scss',
 })

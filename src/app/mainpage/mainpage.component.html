@@ -11,6 +11,15 @@
             @if (sidenavService.activeComponent() == 'newtodo') {
             <app-newtodo></app-newtodo>
             }
+            @if (sidenavService.activeComponent() == 'private') {
+            <app-privatetodo></app-privatetodo>
+            }
+            @if (sidenavService.activeComponent() == 'study') {
+            <app-studytodo></app-studytodo>
+            }
+            @if (sidenavService.activeComponent() == 'work') {
+            <app-worktodo></app-worktodo>
+            }
         </mat-sidenav-content>
     </mat-sidenav-container>
 </main>
