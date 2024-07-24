@@ -1,7 +1,7 @@
 import { Component, inject, ChangeDetectionStrategy, TrackByFunction } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodoService } from '../shared/services/todo.service';
-import { SidenavService } from '../shared/services/sidenavservice.service';
+import { TodoService } from '../services/todo.service';
+import { SidenavService } from '../services/sidenavservice.service';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
-import { Todo } from '../shared/models/todo';
+import { Todo } from '../models/todo';
 
 @Component({
   selector: 'app-todolist',
