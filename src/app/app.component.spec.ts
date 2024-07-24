@@ -14,16 +14,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have the 'ToDoOrganizer' title`, () => {
+  it(`should have the 'todoorganizer' title`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ToDoOrganizer');
+    expect(app.title).toEqual('todoorganizer');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, ToDoOrganizer');
+    expect(compiled.querySelector('h1')?.textContent).toContain('Hello, todoorganizer');
   });
 });
