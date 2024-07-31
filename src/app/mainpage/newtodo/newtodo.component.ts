@@ -34,17 +34,17 @@ export class NewtodoComponent {
     this.todoForm = this.fb.group({
       title: [''],
       description: [''],
-      dueDate: [null || new Date()],
+      dueDate: [new Date()],
       priority: ['low'],
       category: ['private'],
       status: ['pending'],
     });
   }
 
-  onSubmit() {
+  async onSubmit() {
     const newTodo: Todo = this.todoForm.value;
     if (this.todoForm.valid) {
-      this.todoService.addTodo(newTodo);
+      await this.todoService.addTodo(newTodo);
     }
     this.onReset();
     if (this.todoService.setLoading()) {

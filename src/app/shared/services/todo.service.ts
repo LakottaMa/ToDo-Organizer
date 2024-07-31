@@ -1,6 +1,7 @@
 import { Injectable, signal, inject, computed } from '@angular/core';
 import { Todo } from '../models/todo';
 import { SidenavService } from '../services/sidenavservice.service';
+import { doc, collection, addDoc, Firestore, updateDoc, getDocs } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +9,29 @@ import { SidenavService } from '../services/sidenavservice.service';
 
 export class TodoService {
   sidenavService = inject(SidenavService);
-  private nextId = 1;
+  firestore = inject(Firestore);
   readonly isLoading = signal(false);
   todos = signal<Todo[]>([]);
 
-  /**
-   * Generates a unique ID for a new todo item.
-   * @return {number} The generated unique ID.
-   */
-  private generateId(): number {
-    let id = this.nextId++;
-    while (this.todos().some(todo => todo.id === id)) {
-      id = this.nextId++;
-    }
-    return id;
+  constructor() {
   }
 
-  /**
-   * Sets the loading state to true, and after 1 second, sets it back to false,
-   * to simulate a real API call and showing the progress bar.
-   * @return signal<boolean>
-   */
+  async loadTodos() {
+    const collectionNames = ['todos/private/todosPRIVATE', 'todos/study/todosSTUDY', 'todos/work/todosWORK'];
+    const todos: Todo[] = [];
+    for (const collectionName of collectionNames) {
+      const todoCollection = collection(this.firestore, collectionName);
+      const querySnapshot = await getDocs(todoCollection);
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        todos.push({ id: doc.id, ...data, dueDate: data['dueDate'].toDate() } as Todo);
+      });
+    }
+    console.log('Loaded todos from Firestore:', todos);
+    this.todos.set(todos);
+    return this.todos;
+  }
+
   setLoading() {
     this.isLoading.set(true);
     setTimeout(() => {
@@ -37,44 +40,13 @@ export class TodoService {
     return this.isLoading;
   }
 
-  /**
-   * Add a new todo item to the list of todos.
-   * @param {Todo} todo - The todo item to be added.
-   */
-  addTodo(todo: Todo) {
-    todo.id = this.generateId();
-    this.todos.set([...this.todos(), todo]);
-    // In a real app, save to a database or local storage
+  async addTodo(todo: Todo) {
+    const docRef = await addDoc(collection(this.firestore, 'todos', todo.category, 'todos' + todo.category.toUpperCase()), todo);
+    await updateDoc(doc(this.firestore, 'todos', todo.category, 'todos' + todo.category.toUpperCase(), docRef.id), { id: docRef.id });
+    this.todos.update(todos => [...todos, { ...todo, id: docRef.id }]);
+    console.log('added', this.todos());
   }
 
-  /**
-   * Retrieves the list of todos.
-   * @return {Signal<Todo[]>} The list of todos.
-   */
-  getTodos() {
-    return this.todos;
-  }
-
-  /**
-   * Updates the todo item in the list of todos.
-   * @param {Todo} todo - The updated todo item.
-   */
-  updateTodo(todo: Todo) {
-    this.todos.update(todos => todos.map(t => t.id === todo.id ? todo : t));
-  }
-
-  /**
-   * Deletes a todo item from the list of todos based on the provided ID.
-   * @param {number} id - The ID of the todo item to be deleted.
-   */
-  deleteTodo(id: number) {
-    this.todos.update(todos => todos.filter(todo => todo.id !== id));
-  }
-
-  /**
-   * Filters the list of todos based on the active category.
-   * @return {Signal<Todo[]>} The filtered list of todos.
-   */
   filteredTodos = computed(() => {
     const activeCategory = this.sidenavService.activeComponent();
     const allTodos = this.todos();

@@ -11,6 +11,7 @@ import { NewtodoComponent } from './newtodo/newtodo.component';
 import { PrivatetodoComponent } from './privatetodo/privatetodo.component';
 import { StudytodoComponent } from './studytodo/studytodo.component';
 import { WorktodoComponent } from './worktodo/worktodo.component';
+import { TodoService } from '../shared/services/todo.service';
 @Component({
   selector: 'app-mainpage',
   standalone: true,
@@ -20,11 +21,12 @@ import { WorktodoComponent } from './worktodo/worktodo.component';
 })
 export class MainpageComponent implements OnInit {
   sidenavService = inject(SidenavService)
+  todoService = inject(TodoService);
 
   constructor() { }
 
   ngOnInit(): void {
     this.sidenavService.setActiveComponent('dashboard');
+    this.todoService.loadTodos();
    }
-
 }

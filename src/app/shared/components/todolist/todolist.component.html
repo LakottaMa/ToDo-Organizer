@@ -1,30 +1,29 @@
 <main>
     <section>
         <mat-accordion>
-            @for (todo of todoService.filteredTodos(); track todo.id) {
-            <mat-expansion-panel>
+            <mat-expansion-panel *ngFor="let todo of filteredTodos();">
                 <mat-expansion-panel-header>
-                    <mat-panel-title>{{ todo.title }}</mat-panel-title>
+                    <mat-panel-title>{{todo.title}}</mat-panel-title>
                 </mat-expansion-panel-header>
-                <form [formGroup]="editForms[todo.id!]" class="form">
+                <div class="form">
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Title</mat-label>
-                        <input matInput formControlName="title">
+                        <input matInput [(ngModel)]="todo.title" />
                     </mat-form-field>
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Description</mat-label>
-                        <textarea matInput formControlName="description"></textarea>
+                        <textarea matInput></textarea>
                     </mat-form-field>
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Due Date</mat-label>
-                            <input matInput formControlName="dueDate" [matDatepicker]="picker" (focus)="picker.open()">
+                            <input matInput [(ngModel)]="todo.dueDate" [matDatepicker]="picker" (focus)="picker.open()"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Priority</mat-label>
-                            <mat-select formControlName="priority">
+                            <mat-select [(ngModel)]="todo.priority">
                                 <mat-option value="low">Low</mat-option>
                                 <mat-option value="medium">Medium</mat-option>
                                 <mat-option value="high">High</mat-option>
@@ -34,7 +33,7 @@
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Category</mat-label>
-                            <mat-select formControlName="category">
+                            <mat-select [(ngModel)]="todo.category">
                                 <mat-option value="private">Private</mat-option>
                                 <mat-option value="study">Study</mat-option>
                                 <mat-option value="work">Work</mat-option>
@@ -42,7 +41,7 @@
                         </mat-form-field>
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Status</mat-label>
-                            <mat-select formControlName="status">
+                            <mat-select [(ngModel)]="todo.status">
                                 <mat-option value="pending">Pending</mat-option>
                                 <mat-option value="in progress">In Progress</mat-option>
                                 <mat-option value="done">Done</mat-option>
@@ -50,14 +49,11 @@
                         </mat-form-field>
                     </div>
                     <div class="form-buttons">
-                        <button type="button" mat-raised-button color="primary" (click)="onUpdate(todo)">Update</button>
-                        <button type="button" mat-raised-button color="warn" (click)="onDelete(todo)">Delete</button>
+                        <button type="button" mat-raised-button color="primary">Update</button>
+                        <button type="button" mat-raised-button color="warn">Delete</button>
                     </div>
-                </form>
+                </div>
             </mat-expansion-panel>
-        } @empty {
-            <p>No todos found.</p>
-          }
         </mat-accordion>
     </section>
 </main>

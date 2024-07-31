@@ -13,7 +13,7 @@
             <div class="field-pair">
                 <mat-form-field class="form-field-pair" appearance="outline">
                     <mat-label>due date</mat-label>
-                    <input formControlName="dueDate" matInput [matDatepicker]="picker" (focus)="picker.open()">
+                    <input formControlName="dueDate" matInput  [matDatepicker]="picker" (focus)="picker.open()">
                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>

@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { TodolistComponent } from '../../shared/todolist/todolist.component';
+import { TodolistComponent } from '../../shared/components/todolist/todolist.component';
 import { TodoService } from '../../shared/services/todo.service';
 
 @Component({
