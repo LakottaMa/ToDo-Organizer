@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TodoService } from '../../shared/services/todo.service';
 import { SidenavService } from '../../shared/services/sidenavservice.service';
-import { Todo } from '../../shared/models/todo';
+import { Todo } from '../../shared/interfaces/todo';
 
 @Component({
   selector: 'app-newtodo',
@@ -28,17 +28,10 @@ export class NewtodoComponent {
   todoService = inject(TodoService);
   sidenavService = inject(SidenavService);
   fb = inject(FormBuilder);
-  todoForm: FormGroup;
+  todoForm!: FormGroup;
 
   constructor() {
-    this.todoForm = this.fb.group({
-      title: [''],
-      description: [''],
-      dueDate: [new Date()],
-      priority: ['low'],
-      category: ['private'],
-      status: ['pending'],
-    });
+    this.setTodoForm();
   }
 
   async onSubmit() {
@@ -46,13 +39,20 @@ export class NewtodoComponent {
     if (this.todoForm.valid) {
       await this.todoService.addTodo(newTodo);
     }
-    this.onReset();
+    this.setTodoForm();
     if (this.todoService.setLoading()) {
       this.sidenavService.setActiveComponent(newTodo.category);
     }
   }
 
-  onReset() {
-    this.todoForm.reset();
+  setTodoForm() {
+    this.todoForm = this.fb.group({
+      title: [''],
+      description: [''],
+      dueDate: [new Date()],
+      priority: ['low'],
+      category: ['private'],
+      status: ['pending'],
+    })
   }
 }

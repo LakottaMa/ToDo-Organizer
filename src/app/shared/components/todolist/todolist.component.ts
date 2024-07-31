@@ -1,4 +1,4 @@
-import { Component, inject, ChangeDetectionStrategy, OnInit } from '@angular/core';
+import { Component, inject, ChangeDetectionStrategy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TodoService } from '../../services/todo.service';
 import { SidenavService } from '../../services/sidenavservice.service';
@@ -10,7 +10,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { Todo } from '../../models/todo';
+import { Todo } from '../../interfaces/todo';
 
 @Component({
   selector: 'app-todolist',
@@ -23,14 +23,9 @@ import { Todo } from '../../models/todo';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 
-export class TodolistComponent implements OnInit {
+export class TodolistComponent {
   todoService = inject(TodoService);
   filteredTodos = inject(TodoService).filteredTodos;
   sidenavService = inject(SidenavService);
 
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
 }

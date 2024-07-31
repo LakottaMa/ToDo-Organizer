@@ -12,7 +12,7 @@
                     </mat-form-field>
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Description</mat-label>
-                        <textarea matInput></textarea>
+                        <textarea matInput [(ngModel)]="todo.description"></textarea>
                     </mat-form-field>
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
@@ -49,8 +49,8 @@
                         </mat-form-field>
                     </div>
                     <div class="form-buttons">
-                        <button type="button" mat-raised-button color="primary">Update</button>
-                        <button type="button" mat-raised-button color="warn">Delete</button>
+                        <button type="button" mat-raised-button color="primary" (click)="todoService.updateTodo(todo)">Update</button>
+                        <button type="button" mat-raised-button color="warn" (click)="todoService.deleteTodo(todo)">Delete</button>
                     </div>
                 </div>
             </mat-expansion-panel>

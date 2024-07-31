@@ -27,6 +27,5 @@ export class MainpageComponent implements OnInit {
 
   ngOnInit(): void {
     this.sidenavService.setActiveComponent('dashboard');
-    this.todoService.loadTodos();
    }
 }

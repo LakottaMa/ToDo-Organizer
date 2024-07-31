@@ -1,7 +1,7 @@
-import { Injectable, signal, inject, computed } from '@angular/core';
-import { Todo } from '../models/todo';
+import { Injectable, signal, inject, computed, WritableSignal } from '@angular/core';
+import { Todo } from '../interfaces/todo';
 import { SidenavService } from '../services/sidenavservice.service';
-import { doc, collection, addDoc, Firestore, updateDoc, getDocs } from '@angular/fire/firestore';
+import { doc, collection, addDoc, Firestore, updateDoc, getDocs, deleteDoc, onSnapshot, setDoc } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -11,26 +11,52 @@ export class TodoService {
   sidenavService = inject(SidenavService);
   firestore = inject(Firestore);
   readonly isLoading = signal(false);
-  todos = signal<Todo[]>([]);
+  allTodos: WritableSignal<Todo[]> = signal<Todo[]>([]);
 
   constructor() {
+    onSnapshot(this.refTodos(), snapshot => {
+      const updatedTodos = snapshot.docs.map(doc => this.convertFirestoreDocToTodo(doc.data()));
+      this.allTodos.set(updatedTodos);
+    });
   }
 
-  async loadTodos() {
-    const collectionNames = ['todos/private/todosPRIVATE', 'todos/study/todosSTUDY', 'todos/work/todosWORK'];
-    const todos: Todo[] = [];
-    for (const collectionName of collectionNames) {
-      const todoCollection = collection(this.firestore, collectionName);
-      const querySnapshot = await getDocs(todoCollection);
-      querySnapshot.forEach((doc) => {
-        const data = doc.data();
-        todos.push({ id: doc.id, ...data, dueDate: data['dueDate'].toDate() } as Todo);
-      });
-    }
-    console.log('Loaded todos from Firestore:', todos);
-    this.todos.set(todos);
-    return this.todos;
+  private convertFirestoreDocToTodo(doc: any): Todo {
+    return {
+      ...doc,
+      dueDate: doc.dueDate ? doc.dueDate.toDate() : null,
+    };
   }
+
+  refTodos() {
+    return collection(this.firestore, 'allTodos');
+  }
+
+  async addTodo(todo: Todo) {
+    const docRef = await addDoc(this.refTodos(), todo);
+    await updateDoc(doc(this.refTodos(), docRef.id), { id: docRef.id });
+    console.table(this.allTodos());
+  }
+
+  async deleteTodo(todo: Todo) {
+    await deleteDoc(doc(this.refTodos(), todo.id));
+    console.table(this.allTodos());
+  }
+
+  async updateTodo(todo: Todo) {
+    await updateDoc(doc(this.refTodos(), todo.id), { ...todo });
+    console.table(this.allTodos());
+  }
+
+
+  filteredTodos = computed(() => {
+    const activeCategory = this.sidenavService.activeComponent();
+    const allTodos = this.allTodos();
+    if (activeCategory === null || activeCategory === 'dashboard') {
+      return allTodos;
+    } else {
+      return allTodos.filter(todo => todo.category === activeCategory);
+    }
+  });
 
   setLoading() {
     this.isLoading.set(true);
@@ -39,21 +65,4 @@ export class TodoService {
     }, 1000);
     return this.isLoading;
   }
-
-  async addTodo(todo: Todo) {
-    const docRef = await addDoc(collection(this.firestore, 'todos', todo.category, 'todos' + todo.category.toUpperCase()), todo);
-    await updateDoc(doc(this.firestore, 'todos', todo.category, 'todos' + todo.category.toUpperCase(), docRef.id), { id: docRef.id });
-    this.todos.update(todos => [...todos, { ...todo, id: docRef.id }]);
-    console.log('added', this.todos());
-  }
-
-  filteredTodos = computed(() => {
-    const activeCategory = this.sidenavService.activeComponent();
-    const allTodos = this.todos();
-    if (activeCategory === null || activeCategory === 'dashboard') {
-      return allTodos;
-    } else {
-      return allTodos.filter(todo => todo.category === activeCategory);
-    }
-  });
 }
