@@ -4,6 +4,7 @@
             <mat-expansion-panel *ngFor="let todo of filteredTodos();">
                 <mat-expansion-panel-header>
                     <mat-panel-title>{{todo.title}}</mat-panel-title>
+                    <mat-panel-description>created: {{todo.dueDate?.toLocaleDateString()}}</mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="form">
                     <mat-form-field class="form-field" appearance="outline">

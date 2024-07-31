@@ -47,6 +47,12 @@ mat-expansion-panel-header {
     border: 1px solid rgba(240, 248, 255, 0.13);
 }
 
+.mat-expansion-panel-header-description {
+    flex-grow: 0.5;
+    font-weight: 200;
+}
+
+
 mat-expansion-panel:nth-child(odd) {
     animation: fadeInLeft 0.5s ease-in-out;
 }

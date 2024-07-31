@@ -65,4 +65,17 @@ export class TodoService {
     }, 1000);
     return this.isLoading;
   }
+
+  privateTodosAmaount() {
+    return this.allTodos().filter(todo => todo.category === 'private').length;
+  }
+
+  studyTodosAmaount() {
+    return this.allTodos().filter(todo => todo.category === 'study').length;
+  }
+
+  workTodosAmaount() {
+    return this.allTodos().filter(todo => todo.category === 'work').length;
+  }
+
 }
