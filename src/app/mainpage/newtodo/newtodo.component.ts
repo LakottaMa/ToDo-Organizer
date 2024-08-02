@@ -11,7 +11,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatNativeDateModule } from '@angular/material/core';
 import { TodoService } from '../../shared/services/todo.service';
 import { SidenavService } from '../../shared/services/sidenavservice.service';
-import { Todo } from '../../shared/interfaces/todo';
+import { Todo } from '../../shared/models/todo.class';
 
 @Component({
   selector: 'app-newtodo',
@@ -37,6 +37,12 @@ export class NewtodoComponent {
   async onSubmit() {
     const newTodo: Todo = this.todoForm.value;
     if (this.todoForm.valid) {
+      const newTodo: Todo = {
+        ...this.todoForm.value,
+        created: (new Date()),
+        updated: '',
+        completed: '',
+      }
       await this.todoService.addTodo(newTodo);
     }
     this.setTodoForm();
