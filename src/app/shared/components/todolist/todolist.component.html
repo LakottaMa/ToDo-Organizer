@@ -8,20 +8,23 @@
                     <mat-panel-title>
                         {{todo.title}}
                     </mat-panel-title>
+                    <mat-panel-description>
+                        updated: {{todo.updated?.getDate()}}.{{todo.updated?.getMonth()}}.{{todo.updated?.getFullYear()}} at {{todo.updated?.getHours()}}:{{todo.updated?.getMinutes()}} Uhr
+                    </mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="form">
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Title</mat-label>
-                        <input matInput [ngModel]="todo.title" />
+                        <input matInput [(ngModel)]="todo.title" />
                     </mat-form-field>
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Description</mat-label>
-                        <textarea matInput [ngModel]="todo.description"></textarea>
+                        <textarea matInput [(ngModel)]="todo.description"></textarea>
                     </mat-form-field>
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Due Date</mat-label>
-                            <input matInput [matDatepicker]="picker" [ngModel]="todo.dueDate" />
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="todo.dueDate" />
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker>
                                 <mat-datepicker-actions>
@@ -32,7 +35,7 @@
                         </mat-form-field>
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Priority</mat-label>
-                            <mat-select [ngModel]="todo.priority">
+                            <mat-select [(ngModel)]="todo.priority">
                                 <mat-option value="low">Low</mat-option>
                                 <mat-option value="medium">Medium</mat-option>
                                 <mat-option value="high">High</mat-option>
@@ -42,7 +45,7 @@
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Category</mat-label>
-                            <mat-select [ngModel]="todo.category">
+                            <mat-select [(ngModel)]="todo.category">
                                 <mat-option value="private">Private</mat-option>
                                 <mat-option value="study">Study</mat-option>
                                 <mat-option value="work">Work</mat-option>
@@ -50,7 +53,7 @@
                         </mat-form-field>
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Status</mat-label>
-                            <mat-select [ngModel]="todo.status">
+                            <mat-select [(ngModel)]="todo.status">
                                 <mat-option value="pending">Pending</mat-option>
                                 <mat-option value="in progress">In Progress</mat-option>
                                 <mat-option value="done">Done</mat-option>
@@ -58,8 +61,10 @@
                         </mat-form-field>
                     </div>
                     <div class="form-buttons">
-                        <button type="button" mat-raised-button color="primary">Update</button>
-                        <button type="button" mat-raised-button color="warn">Delete</button>
+                        <button type="button" mat-raised-button color="primary"
+                            (click)="todoService.updateTodo(todo)">Update</button>
+                        <button type="button" mat-raised-button color="warn"
+                            (click)="todoService.deleteTodo(todo)">Delete</button>
                     </div>
                 </div>
             </mat-expansion-panel>

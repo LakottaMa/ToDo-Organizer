@@ -1,9 +1,7 @@
 import { Injectable, signal, inject, computed, effect } from '@angular/core';
 import { Todo } from '../models/todo.class';
 import { SidenavService } from '../services/sidenavservice.service';
-import { Timestamp } from '@angular/fire/firestore';
-import { doc, collection, addDoc, Firestore, updateDoc, deleteDoc, onSnapshot, CollectionReference } from '@angular/fire/firestore';
-import { formatDate } from '@angular/common';
+import { doc, collection, addDoc, Firestore, updateDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +11,9 @@ export class TodoService {
   sidenavService = inject(SidenavService);
   firestore = inject(Firestore);
   readonly isLoading = signal(false);
-  private todosCollection = collection(this.firestore, 'allTodos') as CollectionReference<Todo>;
   public allTodos = signal<Todo[]>([]);
+
+  readonly todosCollection = collection(this.firestore, 'allTodos');
 
   constructor() {
     effect(() => {
@@ -27,7 +26,9 @@ export class TodoService {
   }
 
   async addTodo(todo: Todo) {
-    await addDoc(this.todosCollection, todo);
+    const docRef = await addDoc(this.todosCollection, todo);
+    todo.id = docRef.id;
+    await updateDoc(doc(this.todosCollection, docRef.id), { id: docRef.id });
   }
 
   async deleteTodo(todo: Todo) {
@@ -35,7 +36,9 @@ export class TodoService {
   }
 
   async updateTodo(todo: Todo) {
-    await updateDoc(doc(this.todosCollection, todo.id), { ...todo, updated: Timestamp.now() });
+    todo.updated = new Date();
+    todo.completed = todo.status === 'done' ? new Date() : todo.completed = null;
+    await updateDoc(doc(this.todosCollection, todo.id), { ...todo, updated: todo.updated });
     this.sidenavService.setActiveComponent(todo.category);
   }
 
