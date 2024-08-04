@@ -6,23 +6,23 @@
             </button>
         </div>
         <mat-list>
-            <mat-list-item matBadge="{{todoService.allTodos().length}}"  matBadgeColor="accent" role="navigation" (click)="sidenavService.setActiveComponent('dashboard')" [ngClass]="{'active': sidenavService.activeComponent() == 'dashboard'}">
+            <mat-list-item matBadge="{{todoService.allTodos().length}}" matBadgeColor="accent" role="navigation"
+                (click)="sidenavService.setActiveComponent('dashboard')"
+                [ngClass]="{'active': sidenavService.activeComponent() == 'dashboard'}">
                 <span>Dashboard</span>
             </mat-list-item>
-            <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('newtodo')" [ngClass]="{'active': sidenavService.activeComponent() == 'newtodo'}">
+            <mat-list-item role="navigation" (click)="sidenavService.setActiveComponent('newtodo')"
+                [ngClass]="{'active': sidenavService.activeComponent() == 'newtodo'}">
                 <span>New ToDo</span>
             </mat-list-item>
         </mat-list>
-        <mat-divider></mat-divider>
+        <mat-divider role="separator"></mat-divider>
         <mat-list>
-            <mat-list-item matBadge="{{todoService.privateTodosAmaount()}}" matBadgeColor="accent" role="navigation" (click)="sidenavService.setActiveComponent('private')" [ngClass]="{'active': sidenavService.activeComponent() == 'private'}">
-                <span>Private</span>
-            </mat-list-item>
-            <mat-list-item matBadge="{{todoService.studyTodosAmaount()}}" matBadgeColor="accent" role="navigation" (click)="sidenavService.setActiveComponent('study')" [ngClass]="{'active': sidenavService.activeComponent() == 'study'}">
-                <span>Study</span>
-            </mat-list-item>
-            <mat-list-item matBadge="{{todoService.workTodosAmaount()}}" matBadgeColor="accent" role="navigation" (click)="sidenavService.setActiveComponent('work')" [ngClass]="{'active': sidenavService.activeComponent() == 'work'}">
-                <span>Work</span>
+            <mat-list-item *ngFor="let category of ['private', 'study', 'work']"
+                matBadge="{{ todoService.getTodosByCategory(category) }}" matBadgeColor="accent" role="navigation"
+                (click)="sidenavService.setActiveComponent(category)"
+                [ngClass]="{active: sidenavService.activeComponent() == category}">
+                <span>{{ category | titlecase }}</span>
             </mat-list-item>
         </mat-list>
     </section>

@@ -10,9 +10,8 @@ import { doc, collection, addDoc, Firestore, updateDoc, deleteDoc, onSnapshot } 
 export class TodoService {
   sidenavService = inject(SidenavService);
   firestore = inject(Firestore);
-  readonly isLoading = signal(false);
+  isLoading = signal(false);
   public allTodos = signal<Todo[]>([]);
-
   readonly todosCollection = collection(this.firestore, 'allTodos');
 
   constructor() {
@@ -20,6 +19,7 @@ export class TodoService {
       const unsubscribe = onSnapshot(this.todosCollection, (snapshot) => {
         const todos: Todo[] = snapshot.docs.map(doc => new Todo(doc.data()));
         this.allTodos.set(todos);
+        this.setLoading();
       });
       return () => unsubscribe();
     });
@@ -53,20 +53,11 @@ export class TodoService {
     this.isLoading.set(true);
     setTimeout(() => {
       this.isLoading.set(false);
-    }, 1000);
+    }, 800);
     return this.isLoading;
   }
 
-  privateTodosAmaount() {
-    return this.allTodos().filter(todo => todo.category === 'private').length;
+  getTodosByCategory(category: string) {
+    return this.allTodos().filter(todo => todo.category === category).length || 0;
   }
-
-  studyTodosAmaount() {
-    return this.allTodos().filter(todo => todo.category === 'study').length;
-  }
-
-  workTodosAmaount() {
-    return this.allTodos().filter(todo => todo.category === 'work').length;
-  }
-
 }
