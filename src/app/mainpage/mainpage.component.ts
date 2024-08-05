@@ -12,6 +12,7 @@ import { PrivatetodoComponent } from './privatetodo/privatetodo.component';
 import { StudytodoComponent } from './studytodo/studytodo.component';
 import { WorktodoComponent } from './worktodo/worktodo.component';
 import { TodoService } from '../shared/services/todo.service';
+
 @Component({
   selector: 'app-mainpage',
   standalone: true,

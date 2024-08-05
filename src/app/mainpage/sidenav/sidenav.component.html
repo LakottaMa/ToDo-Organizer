@@ -6,7 +6,7 @@
             </button>
         </div>
         <mat-list>
-            <mat-list-item matBadge="{{todoService.allTodos().length}}" matBadgeColor="accent" role="navigation"
+            <mat-list-item matBadge="{{todoService.allTodos().length}}" [matBadgeColor]="todoService.allTodos().length > 0 ? 'accent' : 'primary'" role="navigation"
                 (click)="sidenavService.setActiveComponent('dashboard')"
                 [ngClass]="{'active': sidenavService.activeComponent() == 'dashboard'}">
                 <span>Dashboard</span>
@@ -19,7 +19,7 @@
         <mat-divider role="separator"></mat-divider>
         <mat-list>
             <mat-list-item *ngFor="let category of ['private', 'study', 'work']"
-                matBadge="{{ todoService.getTodosByCategory(category) }}" matBadgeColor="accent" role="navigation"
+                matBadge="{{ todoService.getAmountTodos(category) }}" [matBadgeColor]="todoService.getAmountTodos(category) > 0 ? 'accent' : 'primary'"
                 (click)="sidenavService.setActiveComponent(category)"
                 [ngClass]="{active: sidenavService.activeComponent() == category}">
                 <span>{{ category | titlecase }}</span>

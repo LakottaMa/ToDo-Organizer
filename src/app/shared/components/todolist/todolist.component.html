@@ -1,4 +1,3 @@
-<!-- todolist.component.html -->
 <main>
     <section>
         <mat-accordion>
@@ -15,7 +14,7 @@
                 <div class="form">
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Title</mat-label>
-                        <input matInput [(ngModel)]="todo.title" />
+                        <input matInput [(ngModel)]="todo.title"/>
                     </mat-form-field>
                     <mat-form-field class="form-field" appearance="outline">
                         <mat-label>Description</mat-label>
@@ -24,7 +23,7 @@
                     <div class="field-pair">
                         <mat-form-field class="form-field-pair" appearance="outline">
                             <mat-label>Due Date</mat-label>
-                            <input matInput [matDatepicker]="picker" [(ngModel)]="todo.dueDate" />
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="todo.dueDate"/>
                             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker>
                                 <mat-datepicker-actions>

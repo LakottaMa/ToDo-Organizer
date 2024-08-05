@@ -1,7 +1,16 @@
 <main>
     <section>
-        @if (!todoService.isLoading()) {
-            <app-todolist></app-todolist>
-            }
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center"
+        (selectedTabChange)="todoService.onTabChangeOfTodoState($event)">
+            <mat-tab label="Pending">
+                    <app-todolist></app-todolist>
+            </mat-tab>
+            <mat-tab label="in Progress" isSelected="true">
+                <app-todolist></app-todolist>
+            </mat-tab>
+            <mat-tab label="Done">
+                <app-todolist></app-todolist>
+            </mat-tab>
+        </mat-tab-group>
     </section>
 </main>

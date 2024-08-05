@@ -2,6 +2,7 @@ import { Injectable, signal, inject, computed, effect } from '@angular/core';
 import { Todo } from '../models/todo.class';
 import { SidenavService } from '../services/sidenavservice.service';
 import { doc, collection, addDoc, Firestore, updateDoc, deleteDoc, onSnapshot } from '@angular/fire/firestore';
+import { MatTabChangeEvent } from '@angular/material/tabs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class TodoService {
   sidenavService = inject(SidenavService);
   firestore = inject(Firestore);
   isLoading = signal(false);
+  public activeStateTab = signal(<string | null>(null));
   public allTodos = signal<Todo[]>([]);
   readonly todosCollection = collection(this.firestore, 'allTodos');
 
@@ -42,11 +44,24 @@ export class TodoService {
     this.sidenavService.setActiveComponent(todo.category);
   }
 
+  setActiveState(stateName: string) {
+    this.activeStateTab.set(stateName);
+  }
+
+  onTabChangeOfTodoState(event: MatTabChangeEvent) {
+    this.setActiveState(event.tab.textLabel.toLowerCase());
+  }
+
   filteredTodos = computed(() => {
     const activeCategory = this.sidenavService.activeComponent();
-    const allTodos = this.allTodos();
-    console.log('filtered', allTodos);
-    return allTodos.filter(todo => todo.category === activeCategory || activeCategory === 'dashboard');
+    const activeState = this.activeStateTab();
+    let filteredTodos = this.allTodos().filter(todo =>
+      activeCategory ? todo.category === activeCategory : true
+    );
+    filteredTodos = filteredTodos.filter(todo =>
+      activeState ? todo.status === activeState : true
+    );
+    return filteredTodos;
   });
 
   setLoading() {
@@ -57,7 +72,7 @@ export class TodoService {
     return this.isLoading;
   }
 
-  getTodosByCategory(category: string) {
+  getAmountTodos(category: string) {
     return this.allTodos().filter(todo => todo.category === category).length || 0;
   }
 }
