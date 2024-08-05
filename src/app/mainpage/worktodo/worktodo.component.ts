@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatTabChangeEvent, MatTabsModule } from '@angular/material/tabs';
+import { MatBadgeModule } from '@angular/material/badge';
 import { TodolistComponent } from '../../shared/components/todolist/todolist.component';
 import { TodoService } from '../../shared/services/todo.service';
 
 @Component({
   selector: 'app-worktodo',
   standalone: true,
-  imports: [ CommonModule, MatTabsModule, TodolistComponent],
+  imports: [ CommonModule, MatTabsModule, TodolistComponent, MatBadgeModule],
   templateUrl: './worktodo.component.html',
   styleUrl: './worktodo.component.scss'
 })

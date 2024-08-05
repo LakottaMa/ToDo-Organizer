@@ -1,14 +1,24 @@
+<!-- privatetodo.component.html -->
 <main>
     <section>
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="center"
-        (selectedTabChange)="todoService.onTabChangeOfTodoState($event)">
+            (selectedTabChange)="todoService.onTabChangeOfTodoState($event)">
             <mat-tab label="Pending">
-                    <app-todolist></app-todolist>
+                <ng-template mat-tab-label>
+                    <span matBadge="test" matBadgeOverlap="false">Pending</span>
+                </ng-template>
+                <app-todolist></app-todolist>
             </mat-tab>
-            <mat-tab label="in Progress" isSelected="true">
+            <mat-tab label="in Progress">
+                <ng-template mat-tab-label>
+                    <span matBadge="test" matBadgeOverlap="false">In Progress</span>
+                </ng-template>
                 <app-todolist></app-todolist>
             </mat-tab>
             <mat-tab label="Done">
+                <ng-template mat-tab-label>
+                    <span matBadge="test" matBadgeOverlap="false">Done</span>
+                </ng-template>
                 <app-todolist></app-todolist>
             </mat-tab>
         </mat-tab-group>
